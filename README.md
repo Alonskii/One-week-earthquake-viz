@@ -23,3 +23,6 @@ The title of the earthquake was gotten from the json file by going through the m
 Finally, I plotted the graph and stored the visualization in the file 'sevenday_quakes.html, which clearly shows 
 the occurence of a seven day Earthquake across the world. 
 
+The PNG file is the output of the visualization. 
+
+
