@@ -4,7 +4,7 @@ from plotly import offline
 
 
 # Get a JSON file.
-filename = 'earthquake_data/seven_days_earthquake.json'
+filename = 'seven_days_earthquake.json'
 with open(filename, encoding='utf-8') as f:
     eq_data = json.load(f)
 
@@ -20,6 +20,7 @@ all_eq_dicts = eq_data["features"]
 
 mags, lons,  = [], []
 lats, hover_texts = [], []
+clean_mags = []
 
 for eq_dict in all_eq_dicts:
     mags.append(eq_dict["properties"]["mag"])
@@ -27,13 +28,11 @@ for eq_dict in all_eq_dicts:
     lats.append(eq_dict["geometry"]["coordinates"][1])
     hover_texts.append(eq_dict["properties"]["title"])
 
-clean_mags = []
-
-for item in mags:
-    if item < 0:
-        pass
-    else:
-        clean_mags.append(item)
+    for item in mags:
+        if item < 0:
+            pass
+        else:
+            clean_mags.append(item)
 
 # Map the earthquakes.
 data = [{
