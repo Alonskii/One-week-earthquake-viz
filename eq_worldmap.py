@@ -2,7 +2,6 @@ import json
 from plotly.graph_objs import Scattergeo, Layout
 from plotly import offline
 
-
 # Get a JSON file.
 filename = 'earthquake_data/seven_days_earthquake.json'
 with open(filename, encoding='utf-8') as f:
@@ -18,21 +17,16 @@ with open(readable_file, 'w') as f:
 title = eq_data["metadata"]["title"]
 all_eq_dicts = eq_data["features"]
 
-mags, lons,  = [], []
+mags, lons, = [], []
 lats, hover_texts = [], []
-clean_mags = []
 
 for eq_dict in all_eq_dicts:
-    mags.append(eq_dict["properties"]["mag"])
-    lons.append(eq_dict["geometry"]["coordinates"][0])
-    lats.append(eq_dict["geometry"]["coordinates"][1])
-    hover_texts.append(eq_dict["properties"]["title"])
-
-    for item in mags:
-        if item < 0:
-            pass
-        else:
-            clean_mags.append(item)
+    mag = eq_dict["properties"]["mag"]
+    if mag > 0:
+        mags.append(eq_dict["properties"]["mag"])
+        lons.append(eq_dict["geometry"]["coordinates"][0])
+        lats.append(eq_dict["geometry"]["coordinates"][1])
+        hover_texts.append(eq_dict["properties"]["title"])
 
 # Map the earthquakes.
 data = [{
@@ -43,13 +37,12 @@ data = [{
 
     # Outline marks in the map
     'marker': {
-        'size':[5*mag for mag in clean_mags],
+        'size': [5*mag for mag in mags],
         'color': mags,
         'colorscale': 'Ylorrd',
         'reversescale': True,
         'colorbar': {'title': 'Magnitude'},
     },
-
 }]
 
 # One-week Earthquake data output.
